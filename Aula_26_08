@@ -1,0 +1,25 @@
+-- AULA 26/08/2024
+-- OBJETIVOS: CREATE, DROP e ALTER
+-- CRIAR UMA TABELA
+create database banco;
+
+-- CRIAR A TABELA
+create table minhatabela (
+	nome varchar(20)
+);
+
+create table pessoas (
+	nome varchar(20),
+    numero_sorte int,
+    data_nascimento date
+);
+
+-- ADICIONAR COLUNA A UMA TABELA
+alter table pessoas add column profissao varchar(20);
+
+
+-- REMOVER UMA TABELA
+drop table minhatabela;
+
+create database banco2; -- criar o banco de dados
+drop database banco2; -- remover o banco de dados
