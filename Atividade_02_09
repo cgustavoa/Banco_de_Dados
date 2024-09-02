@@ -1,11 +1,14 @@
+create database livraria;
 create table livros (
-    id_livro int, 
+    id_livro int NOT NULL auto_increment, 
     titulo varchar(50), 
     autor varchar (50), 
     ano_publicacao int, 
     preço float, 
-    quantidade_estoque int
+    quantidade_estoque int,
+    PRIMARY KEY (id_livro)
 );
+
 
 insert into livros (titulo, autor, ano_publicacao, preço, quantidade_estoque)
 values ('Introdução ao SQL', 'João da Silva', 2015, 50.00, 10);
