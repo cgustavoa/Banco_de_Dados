@@ -1,31 +1,34 @@
--- AULA 02/09
--- OBJETIVOS: CREATE, DROP e ALTER, SELECT, INSERT, UPDATE e DELETE
+create database livraria;
+create table livros (
+    id_livro int NOT NULL auto_increment, 
+    titulo varchar(50), 
+    autor varchar (50), 
+    ano_publicacao int, 
+    preço float, 
+    quantidade_estoque int,
+    PRIMARY KEY (id_livro)
+);
 
--- EXCLUIR UMA COLUNA
-alter table pessoas drop column data_nascimento;
 
--- ALTERAR ATRIBUTOS
-alter table pessoas change profissao sobrenome VARCHAR (40);
+insert into livros (titulo, autor, ano_publicacao, preço, quantidade_estoque)
+values ('Introdução ao SQL', 'João da Silva', 2015, 50.00, 10);
 
--- INSERT REGISTROS
-insert into pessoas (nome, numero_sorte, sobrenome)
-values ('Gustavo', 2, 'Campos');
+insert into livros (titulo, autor, ano_publicacao, preço, quantidade_estoque)
+values ('Mastering SQL', 'Maria Souza', 2018, 120.00, 5);
 
-insert into pessoas (nome, numero_sorte, sobrenome)
-values ('João', 5, 'Silva');
+insert into livros (titulo, autor, ano_publicacao, preço, quantidade_estoque)
+values ('SQL para iniciantes', 'Paulo Santos', 2020, 75.00, 8);
 
--- SELEÇÃO ( EXIBE OS REGISTROS DA COLUNA )
-select * from pessoas;
-select nome, sobrenome from pessoas;
-select * from pessoas where numero_sorte = 2; -- FILTRO DE INFORMAÇÃO
+select * from livros; -- 4.1
+select titulo, ano_publicacao from livros where ano_publicacao >= 2018; -- 4.2
+select titulo, preço from livros where preço between 60 and 100;  -- 4.3
+select titulo, quantidade_estoque from livros where quantidade_estoque < 10;  -- 4.4
 
--- NUNCA DÊ O DELETE E UPDATE SEM 'WHERE'
+SET SQL_SAFE_UPDATES = 0; 
+update livros set preço = 80.00 where titulo = 'SQL para iniciantes';
+update livros set preço = 15.00 where titulo = 'Introdução ao SQL';
 
--- UPDATE 
-SET SQL_SAFE_UPDATES = 0; -- DESABILITAR O MODO DE SEGURANÇA
-update pessoas set numero_sorte = 10 where nome = 'Gustavo';
--- select * from pessoas where nome = 'Gustavo'; (EU QUE FIZ)
+delete from livros where titulo = 'Mastering SQL';
 
--- DELETE	
-delete from pessoas where nome = 'João';
--- select * from pessoas; (EU QUE FIZ)
+select sum((preço * quantidade_estoque)) as total from livros;
+select max(preço) from livros;
