@@ -1,0 +1,31 @@
+-- AULA 02/09
+-- OBJETIVOS: CREATE, DROP e ALTER, SELECT, INSERT, UPDATE e DELETE
+
+-- EXCLUIR UMA COLUNA
+alter table pessoas drop column data_nascimento;
+
+-- ALTERAR ATRIBUTOS
+alter table pessoas change profissao sobrenome VARCHAR (40);
+
+-- INSERT REGISTROS
+insert into pessoas (nome, numero_sorte, sobrenome)
+values ('Gustavo', 2, 'Campos');
+
+insert into pessoas (nome, numero_sorte, sobrenome)
+values ('João', 5, 'Silva');
+
+-- SELEÇÃO ( EXIBE OS REGISTROS DA COLUNA )
+select * from pessoas;
+select nome, sobrenome from pessoas;
+select * from pessoas where numero_sorte = 2; -- FILTRO DE INFORMAÇÃO
+
+-- NUNCA DÊ O DELETE E UPDATE SEM 'WHERE'
+
+-- UPDATE 
+SET SQL_SAFE_UPDATES = 0; -- DESABILITAR O MODO DE SEGURANÇA
+update pessoas set numero_sorte = 10 where nome = 'Gustavo';
+-- select * from pessoas where nome = 'Gustavo'; (EU QUE FIZ)
+
+-- DELETE	
+delete from pessoas where nome = 'João';
+-- select * from pessoas; (EU QUE FIZ)
