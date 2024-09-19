@@ -1,0 +1,53 @@
+CREATE DATABASE loja;
+CREATE TABLE Categorias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE Produtos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    preco DECIMAL(10, 2) NOT NULL CHECK (preco > 0),
+    quantidade_em_estoque INT NOT NULL CHECK (quantidade_em_estoque >= 0),
+    categoria_id INT,
+    FOREIGN KEY (categoria_id) REFERENCES Categorias(id) ON DELETE CASCADE
+);
+
+INSERT INTO Categorias (nome) VALUES 
+('Roupas Esportivas'), 
+('Equipamentos de Futebol'), 
+('Acessórios de Treino');
+
+INSERT INTO Produtos (nome, preco, quantidade_em_estoque, categoria_id) VALUES 
+('Camisa de Futebol', 89.90, 100, (SELECT id FROM Categorias WHERE nome = 'Equipamentos de Futebol')),
+('Tênis de Corrida', 299.99, 50, (SELECT id FROM Categorias WHERE nome = 'Roupas Esportivas')),
+('Faixa de Cabeça', 25.00, 200, (SELECT id FROM Categorias WHERE nome = 'Acessórios de Treino'));
+
+-- 1.
+SELECT p.nome AS produto, p.preco, p.quantidade_em_estoque, c.nome AS categoria
+FROM Produtos p
+JOIN Categorias c ON p.categoria_id = c.id;
+
+-- 2.
+SELECT p.nome, p.preco, p.quantidade_em_estoque FROM Produtos p
+JOIN Categorias c ON p.categoria_id = c.id
+WHERE c.nome = 'Equipamentos de Futebol';
+
+-- 3.
+SELECT nome, quantidade_em_estoque FROM produtos WHERE quantidade_em_estoque > 50;
+
+-- 4. 
+SET SQL_SAFE_UPDATES = 0; 
+UPDATE Produtos SET preco = 279.99 WHERE nome = 'Tênis de Corrida';
+
+-- 5.
+INSERT INTO Categorias (nome) VALUES ('Acessórios Esportivos');
+UPDATE Produtos SET categoria_id = (SELECT id FROM Categorias WHERE nome = 'Acessórios Esportivos') WHERE nome = 'Tênis de Corrida';
+
+-- 6. 
+DELETE FROM Produtos WHERE nome = 'Faixa de Cabeça';
+
+-- REALIZANDO CONSULTA FINAL
+SELECT p.nome AS produto, p.preco, p.quantidade_em_estoque, c.nome AS categoria
+FROM Produtos p
+JOIN Categorias c ON p.categoria_id = c.id;
